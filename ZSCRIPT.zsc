@@ -1,5 +1,8 @@
 version "4.11"
 
+const HDLD_XTB = "xtb";
+const HDLD_XTK = "xtk";
+
 #include "zscript/BeatCrazed/Items/CrossPulseModKit.zsc"
 #include "zscript/BeatCrazed/Weapons/CrossPulseThunderBuster.zsc"
 

@@ -6,16 +6,19 @@ class CrossPulseThunderBuster:ThunderBuster{
     int batt;
     default{
         +hdweapon.fitsinbackpack
+        
         weapon.selectionorder 70;
         weapon.slotnumber 6;
         weapon.slotpriority 1;
         weapon.ammouse 0;
-        scale 0.6;
+        
+        tag "$TAG_XTB";
         inventory.pickupmessage "$PICKUP_XTB";
         obituary "$OB_XTB";
-        hdweapon.barrelsize 32,1.6,3;
-        hdweapon.refid "XTB";
-        tag "$TAG_XTB";
+        
+        HDWeapon.BarrelSize 32,1.6,3;
+        HDWeapon.RefId HDLD_XTB;
+        scale 0.6;
     }
     override void tick(){
         super.tick();

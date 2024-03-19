@@ -30,7 +30,7 @@ class CrossPulseModificationKit : HDPickup {
 
         Tag "$TAG_XTK";
         Inventory.PickupMessage "$PICKUP_XTK";
-        HDPickup.RefID "XTK";
+        HDPickup.RefID HDLD_XTK;
         HDPickup.Bulk 40;
         Scale 0.5;
     }
