@@ -34,12 +34,12 @@ CROSSPULSE_RESETALLOPTIONS = "Reset all options for Cross Pulse Thunderbuster";
 
 // Cross Pulse ThunderBuster Options Text
 MENU_XTB_TITLE             = "------ Cross Pulse ThunderBuster Options ------";
-MENU_XTB_PLASMA_SPAWNTEXT  = "Control the spawn rate of the Cross Pulse ThunderBuster on ThunderBusters:";
+MENU_XTB_TB_SPAWNTEXT      = "Control the spawn rate of the Cross Pulse ThunderBuster on ThunderBusters:";
 MENU_XTB_BACKPACKS         = "Control whether the Cross Pulse ThunderBusters spawn in Backpacks:";
 
 // Cross Pulse Modification Kit Options Text
 MENU_XTK_TITLE             = "------ Cross Pulse Modification Kit Options ------";
-MENU_XTK_PLASMA_SPAWNTEXT  = "Control the spawn rate of the Cross Pulse Modification Kits with ThunderBusters:";
+MENU_XTK_TB_SPAWNTEXT      = "Control the spawn rate of the Cross Pulse Modification Kits with ThunderBusters:";
 MENU_XTK_BACKPACKS         = "Control whether the Cross Pulse Modification Kits spawn in Backpacks:";
 
 
