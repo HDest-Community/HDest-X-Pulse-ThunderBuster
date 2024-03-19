@@ -2,9 +2,225 @@
 // Cross Pulse Thunder Buster
 // ------------------------------------------------------------
 
-class CrossPulseThunderBuster:ThunderBuster{
-    int batt;
-    default{
+class CrossPulseThunderBuster : ThunderBuster {
+    // int rangefinder;
+
+    override void tick() {
+        super.tick();
+
+        if (level.time % 35 == 1 && weaponstatus[TBS_JUSTSHOT] > 0) {
+            weaponstatus[TBS_JUSTSHOT]--;
+        }
+
+        if (
+            (
+                level.time % 18 == 1 && weaponstatus[TBS_JUSTSHOT] < 1
+            ) && (
+                weaponstatus[TBS_BATTERY] > 0 && weaponstatus[TBS_CROSSPULSECHARGE] < 20
+            )
+        ) {
+            weaponstatus[TBS_CROSSPULSECHARGE]++;
+
+            if (!random(0,4)) {
+                weaponstatus[TBS_Battery]--;
+            }
+        }
+
+    }
+    
+    override double weaponbulk() {return 200 + (weaponstatus[1] >= 0 ? ENC_BATTERY_LOADED : 0);}
+    override string,double getpickupsprite() {return "XTBRA0",1.;}
+
+    override void DrawHUDStuff(HDStatusBar sb,HDWeapon hdw, HDPlayerPawn hpl) {
+        if (sb.hudlevel == 1) {
+            sb.drawbattery(-54, -4, sb.DI_SCREEN_CENTER_BOTTOM, reloadorder: true);
+            sb.drawnum(
+                hpl.countinv("HDBattery"),
+                -46, -8,
+                sb.DI_SCREEN_CENTER_BOTTOM
+            );
+        }
+
+        if (hdw.weaponstatus[0]&TBF_ALT) {
+            sb.drawimage(
+                "STBURAUT",
+                (-28, -10),
+                sb.DI_SCREEN_CENTER_BOTTOM|sb.DI_TRANSLATABLE|sb.DI_ITEM_RIGHT
+            );
+            sb.drawnum(int(2000 / HDCONST_ONEMETRE), -16, -17, sb.DI_SCREEN_CENTER_BOTTOM, font.CR_GRAY);
+        } else {
+            sb.drawnum(hdw.weaponstatus[TBS_MAXRANGEDISPLAY], -16, -17, sb.DI_SCREEN_CENTER_BOTTOM, font.CR_GRAY);
+        }
+
+        int charge = hdw.weaponstatus[TBS_CROSSPULSECHARGE];
+        sb.drawwepnum(charge, 20, posy: -8);
+
+        int bat = hdw.weaponstatus[TBS_BATTERY];
+        if (bat > 0) {
+            sb.drawwepnum(bat, 20);
+        } else if (!bat) {
+            sb.drawstring(
+                sb.mamountfont,
+                "00000",
+                (-16,-9),
+                sb.DI_TEXT_ALIGN_RIGHT|sb.DI_TRANSLATABLE|sb.DI_SCREEN_CENTER_BOTTOM,
+                Font.CR_DARKGRAY
+            );
+        }
+    }
+    override void DrawSightPicture(
+        HDStatusBar sb, HDWeapon hdw, HDPlayerPawn hpl,
+        bool sightbob, vector2 bob, double fov, bool scopeview, actor hpc, string whichdot
+    ) {
+        int cx,cy,cw,ch;
+        [cx,cy,cw,ch] = screen.GetClipRect();
+
+        sb.SetClipRect(
+            -16 + bob.x, -4 + bob.y,
+            32, 16,
+            sb.DI_SCREEN_CENTER
+        );
+
+        vector2 bobb = bob * 1.2;
+        bobb.y = clamp(bobb.y, -8, 8);
+
+        sb.drawimage(
+            "frntsite",
+            (0,0) + bobb,
+            sb.DI_SCREEN_CENTER|sb.DI_ITEM_TOP,
+            alpha: 0.9,
+            scale: (1.6, 2)
+        );
+        sb.SetClipRect(cx, cy, cw, ch);
+        sb.drawimage(
+            "backsite",
+            (0, 0) + bob,
+            sb.DI_SCREEN_CENTER|sb.DI_ITEM_TOP,
+            scale: (2, 1)
+        );
+
+        if (scopeview) {
+            bool alt = hdw.weaponstatus[0]&TBF_ALT;
+            int scaledyoffset = 36;
+
+            name ctex = "HDXCAM_TB";
+
+            texman.SetCameraToTexture(hpc, ctex, 3);
+            sb.drawimage(
+                ctex,
+                (0, scaledyoffset) + bob,
+                sb.DI_SCREEN_CENTER|sb.DI_ITEM_CENTER,
+                alpha: alt ? (hpl.flip ? 0.7 : 0.8) : 1.,
+                scale: ((0.25 / 1.2), 0.25)
+            );
+
+            let tb = ThunderBuster(hdw);
+            sb.drawnum(
+                min(tb.rangefinder, 999),
+                24 + bob.x, 12 + bob.y,
+                sb.DI_SCREEN_CENTER,
+                (
+                    tb.rangefinder >= 10
+                    && tb.rangefinder < hdw.weaponstatus[TBS_MAXRANGEDISPLAY]
+                ) ? Font.CR_GRAY : Font.CR_RED,
+                0.4
+            );
+
+            sb.drawnum(
+                hdw.weaponstatus[TBS_MAXRANGEDISPLAY],
+                24 + bob.x, 20 + bob.y,
+                sb.DI_SCREEN_CENTER,
+                Font.CR_WHITE,
+                0.4
+            );
+
+            if (alt) {
+                sb.drawnum(
+                    int(2000 / HDCONST_ONEMETRE),
+                    23 + bob.x, 19 + bob.y,
+                    sb.DI_SCREEN_CENTER,
+                    Font.CR_BLACK,
+                    1.0
+                );
+            }
+
+            sb.drawimage(
+                "tbwindow",
+                (0, scaledyoffset) + bob,
+                sb.DI_SCREEN_CENTER|sb.DI_ITEM_CENTER,
+                scale: (1, 1)
+            );
+
+            bobb *= 3;
+            double dotoff = max(abs(bobb.x), abs(bobb.y));
+            if (dotoff<40) {
+                sb.drawimage(
+                    "redpxl",
+                    (0, scaledyoffset) + bobb,
+                    sb.DI_SCREEN_CENTER|sb.DI_ITEM_TOP,
+                    alpha: (alt ? 0.4 : 0.9) * (1. - dotoff * 0.04),
+                    scale: alt ? (hpl.flip ? (3, 3) : (1, 1)) : (2, 2)
+                );
+            }
+        }
+    }
+
+    action void A_ThunderZap() {
+        if (invoker.weaponstatus[TBS_HEAT] > 20) return;
+
+        int battery = invoker.weaponstatus[TBS_BATTERY];
+        int charge = invoker.weaponstatus[TBS_CROSSPULSECHARGE];
+        // int power = battery + charge;
+        if (battery < 1 && charge < 1) {
+            setweaponstate("nope");
+            return;
+        }
+
+        //preliminary effects
+        A_ZoomRecoil(0.99);
+        A_StartSound("weapons/plasidle");
+        if (countinv("IsMoving") > 9) A_MuzzleClimb(frandom(-0.8, 0.8),frandom(-0.8, 0.8));
+
+        //the actual call
+        vector3 gpos = HDMath.GetGunPos(self);
+        ThunderBuster.ThunderZap(
+            self,
+            gpos.z,
+            invoker.weaponstatus[0]&TBF_ALT,
+            battery
+        );
+
+        //aftereffects
+        if (invoker.weaponstatus[0]&TBF_ALT) {
+            if (charge > 0) {
+                invoker.weaponstatus[TBS_CROSSPULSECHARGE]--;
+            } else if (!random(0, 4)) {
+                invoker.weaponstatus[TBS_BATTERY]--;
+            }
+
+            A_MuzzleClimb(
+                frandom(0.05, 0.2), frandom(-0.2, -0.4),
+                frandom(0.1, 0.3), frandom(-0.2, -0.6),
+                frandom(0.04, 0.12), frandom(-0.1, -0.3),
+                frandom(0.01, 0.03), frandom(-0.1, -0.2)
+            );
+
+            invoker.weaponstatus[TBS_HEAT] += (charge > 0 ? 4 : 6);
+            
+        } else if (charge > 0) {
+            invoker.weaponstatus[TBS_CROSSPULSECHARGE]--;
+        } else if (!random(0, 6)) {
+            invoker.weaponstatus[TBS_BATTERY]--;
+        }
+
+        invoker.weaponstatus[TBS_HEAT] += random(0, (charge > 0 ? 1 : 3));
+        
+
+        //update range thingy
+        invoker.weaponstatus[TBS_MAXRANGEDISPLAY] = (battery > 0 ? battery * 200 + 8000 : 0) / HDCONST_ONEMETRE;
+    }
+
+    default {
         +hdweapon.fitsinbackpack
         
         weapon.selectionorder 70;
@@ -20,207 +236,44 @@ class CrossPulseThunderBuster:ThunderBuster{
         HDWeapon.RefId HDLD_XTB;
         scale 0.6;
     }
-    override void tick(){
-        super.tick();
-        if(level.time % 35 == 1 && weaponstatus[TBS_JUSTSHOT] > 0){
-            weaponstatus[TBS_JUSTSHOT] -= 1;
-        }
-        if(level.time % 18 == 1 && weaponstatus[TBS_JUSTSHOT] < 1){
-            if(weaponstatus[TBS_BATTERY] > 0 && weaponstatus[TBS_CROSSPULSECHARGE] < 20) {
-                weaponstatus[TBS_CROSSPULSECHARGE] += 1;
-                if(!random(0,4)) weaponstatus[TBS_Battery] -= 1;
-            }
-        }
 
-    }
-    
-    override double weaponbulk(){
-        return 200+(weaponstatus[1]>=0?ENC_BATTERY_LOADED:0);
-    }
-    override string,double getpickupsprite(){return "XTBRA0",1.;}
-    override void DrawHUDStuff(HDStatusBar sb,HDWeapon hdw,HDPlayerPawn hpl){
-        if(sb.hudlevel==1){
-            sb.drawbattery(-54,-4,sb.DI_SCREEN_CENTER_BOTTOM,reloadorder:true);
-            sb.drawnum(hpl.countinv("HDBattery"),-46,-8,sb.DI_SCREEN_CENTER_BOTTOM);
-        }
-        if(hdw.weaponstatus[0]&TBF_ALT){
-            sb.drawimage(
-                "STBURAUT",(-28,-10),
-                sb.DI_SCREEN_CENTER_BOTTOM|sb.DI_TRANSLATABLE|sb.DI_ITEM_RIGHT
-            );
-            sb.drawnum(int(2000/HDCONST_ONEMETRE),-16,-17,sb.DI_SCREEN_CENTER_BOTTOM,font.CR_GRAY);
-        }else sb.drawnum(hdw.weaponstatus[TBS_MAXRANGEDISPLAY],-16,-17,sb.DI_SCREEN_CENTER_BOTTOM,font.CR_GRAY);
-        int bat=hdw.weaponstatus[TBS_BATTERY];
-        int charge=hdw.weaponstatus[TBS_CROSSPULSECHARGE];
-        sb.drawwepnum(charge,20, posy:-8);
-        if(bat>0)sb.drawwepnum(bat,20);
-        else if(!bat)sb.drawstring(
-            sb.mamountfont,"00000",
-            (-16,-9),sb.DI_TEXT_ALIGN_RIGHT|sb.DI_TRANSLATABLE|sb.DI_SCREEN_CENTER_BOTTOM,
-            Font.CR_DARKGRAY
-        );
-    }
-        int rangefinder;
-    override void DrawSightPicture(
-        HDStatusBar sb,HDWeapon hdw,HDPlayerPawn hpl,
-        bool sightbob,vector2 bob,double fov,bool scopeview,actor hpc,string whichdot
-    ){
-        int cx,cy,cw,ch;
-        [cx,cy,cw,ch]=screen.GetClipRect();
-        sb.SetClipRect(
-            -16+bob.x,-4+bob.y,32,16,
-            sb.DI_SCREEN_CENTER
-        );
-        vector2 bobb=bob*1.2;
-        bobb.y=clamp(bobb.y,-8,8);
-        sb.drawimage(
-            "frntsite",(0,0)+bobb,sb.DI_SCREEN_CENTER|sb.DI_ITEM_TOP,
-            alpha:0.9,scale:(1.6,2)
-        );
-        sb.SetClipRect(cx,cy,cw,ch);
-        sb.drawimage(
-            "backsite",(0,0)+bob,sb.DI_SCREEN_CENTER|sb.DI_ITEM_TOP,
-            scale:(2,1)
-        );
-
-        if(scopeview){
-            bool alt=hdw.weaponstatus[0]&TBF_ALT;
-            int scaledyoffset=36;
-
-            name ctex="HDXCAM_TB";
-
-            texman.setcameratotexture(hpc,ctex,3);
-            sb.drawimage(
-                ctex,(0,scaledyoffset)+bob,sb.DI_SCREEN_CENTER|sb.DI_ITEM_CENTER,
-                alpha:alt?(hpl.flip?0.7:0.8):1.,scale:((0.25/1.2),0.25)
-            );
-            let tb=ThunderBuster(hdw);
-            sb.drawnum(min(tb.rangefinder,999),
-                24+bob.x,12+bob.y,sb.DI_SCREEN_CENTER,
-                (
-                    tb.rangefinder>=10
-                    &&tb.rangefinder<hdw.weaponstatus[TBS_MAXRANGEDISPLAY]
-                )?Font.CR_GRAY:Font.CR_RED
-                ,0.4
-            );
-            sb.drawnum(hdw.weaponstatus[TBS_MAXRANGEDISPLAY],
-                24+bob.x,20+bob.y,sb.DI_SCREEN_CENTER,Font.CR_WHITE,0.4
-            );
-            if(alt)sb.drawnum(int(2000/HDCONST_ONEMETRE),
-                23+bob.x,19+bob.y,sb.DI_SCREEN_CENTER,Font.CR_BLACK,1.
-            );
-            sb.drawimage(
-                "tbwindow",(0,scaledyoffset)+bob,sb.DI_SCREEN_CENTER|sb.DI_ITEM_CENTER,
-                scale:(1,1)
-            );
-            bobb*=3;
-            double dotoff=max(abs(bobb.x),abs(bobb.y));
-            if(dotoff<40)sb.drawimage(
-                "redpxl",(0,scaledyoffset)+bobb,sb.DI_SCREEN_CENTER|sb.DI_ITEM_TOP,
-                alpha:(alt?0.4:0.9)*(1.-dotoff*0.04),scale:alt?(hpl.flip?(3,3):(1,1)):(2,2)
-            );
-        }
-    }
-
-    action void A_ThunderZap(){
-        if(invoker.weaponstatus[TBS_HEAT]>20)return;
-        int battery=invoker.weaponstatus[TBS_BATTERY];
-        int charge = invoker.weaponstatus[TBS_CROSSPULSECHARGE];
-        int power = battery + charge;
-        if(battery < 1 && charge < 1){
-            setweaponstate("nope");
-            return;
-        }
-
-        //preliminary effects
-        A_ZoomRecoil(0.99);
-        A_StartSound("weapons/plasidle");
-        if(countinv("IsMoving")>9)A_MuzzleClimb(frandom(-0.8,0.8),frandom(-0.8,0.8));
-
-        //the actual call
-        vector3 gpos=HDMath.GetGunPos(self);
-        ThunderBuster.ThunderZap(
-            self,
-            gpos.z,
-            invoker.weaponstatus[0]&TBF_ALT,
-            battery
-        );
-
-        //aftereffects
-        if(invoker.weaponstatus[0]&TBF_ALT){
-            if(charge > 0){
-                invoker.weaponstatus[TBS_CROSSPULSECHARGE]--;
-            }
-            else if(!random(0,4)){
-                invoker.weaponstatus[TBS_BATTERY]--;
-            }
-            A_MuzzleClimb(
-                frandom(0.05,0.2),frandom(-0.2,-0.4),
-                frandom(0.1,0.3),frandom(-0.2,-0.6),
-                frandom(0.04,0.12),frandom(-0.1,-0.3),
-                frandom(0.01,0.03),frandom(-0.1,-0.2)
-            );
-            if(charge > 0){
-                invoker.weaponstatus[TBS_HEAT]+=4;
-            }
-            else {
-                invoker.weaponstatus[TBS_HEAT]+=6;
-            }
-            
-        }else if(charge > 0){
-                invoker.weaponstatus[TBS_CROSSPULSECHARGE]--;
-        }
-        else  if(!random(0,6)){
-            invoker.weaponstatus[TBS_BATTERY]--;
-        }
-        if(charge > 0){
-            invoker.weaponstatus[TBS_HEAT]+=random(0,1);
-        }
-        else {
-            invoker.weaponstatus[TBS_HEAT]+=random(0,3);
-        }
-        
-
-        //update range thingy
-        invoker.weaponstatus[TBS_MAXRANGEDISPLAY]=(battery>0?battery*200+8000:0)/HDCONST_ONEMETRE;
-    }
-
-    states{
-    fire:
-        #### A 3 offset(0,35);
-    hold:
-        #### A 0 A_JumpIf(true,"shoot");
-    shoot:
-        #### A 1 offset(1,33) A_ThunderZap(); 
-        #### A 0 {invoker.weaponstatus[TBS_JUSTSHOT] = 4;}
-        #### A 0 {
-                    if(invoker.weaponstatus[TBS_CROSSPULSECHARGE]>1){
-                        A_ThunderZap();
-                        A_Refire();
+    states {
+        fire:
+            #### A 3 offset(0,35);
+        hold:
+            #### A 0 A_JumpIf(true,"shoot");
+        shoot:
+            #### A 1 offset(1,33) A_ThunderZap(); 
+            #### A 0 {invoker.weaponstatus[TBS_JUSTSHOT] = 4;}
+            #### A 0 {
+                        if (invoker.weaponstatus[TBS_CROSSPULSECHARGE]>1) {
+                            A_ThunderZap();
+                            A_Refire();
+                        }
                     }
+            #### A 1 offset(0,34) A_WeaponReady(WRF_NONE);
+            #### A 1 offset(-1,33) A_WeaponReady(WRF_NONE);
+            #### A 0 {
+                if ((invoker.weaponstatus[TBS_BATTERY] + invoker.weaponstatus[TBS_CROSSPULSECHARGE])<1) {
+                    A_StartSound("weapons/plasmas",CHAN_WEAPON);
+                    A_GunFlash();
+                    setweaponstate("nope");
+                } else {
+                    A_Refire();
                 }
-        #### A 1 offset(0,34) A_WeaponReady(WRF_NONE);
-        #### A 1 offset(-1,33) A_WeaponReady(WRF_NONE);
-        #### A 0{
-            if((invoker.weaponstatus[TBS_BATTERY] + invoker.weaponstatus[TBS_CROSSPULSECHARGE])<1){
-                A_StartSound("weapons/plasmas",CHAN_WEAPON);
-                A_GunFlash();
-                setweaponstate("nope");
-            }else{
-                A_Refire();
             }
-        }
-        #### AAA 4{
-            A_WeaponReady(WRF_NOFIRE);
-            A_GunFlash();
-        }goto ready;
-    spawn:
-        XTBR A -1;
-        stop;
+            #### AAA 4 {
+                A_WeaponReady(WRF_NOFIRE);
+                A_GunFlash();
+            }
+            goto ready;
+        spawn:
+            XTBR A -1;
+            stop;
     }
 }
 
-enum TBStatus{
+enum TBStatus {
     TBF_ALT=1,
     TBF_JUSTUNLOAD=2,
 
