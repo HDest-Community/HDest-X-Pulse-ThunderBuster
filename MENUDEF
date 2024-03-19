@@ -1,0 +1,119 @@
+// Spawn Bias (for items that do replace)
+OptionValue "SpawnBias" {
+	-1,    "Disabled"
+	 0,    "Replace All"
+	 2,    "1 in 3"
+	 4,    "1 in 5"
+	 9,    "1 in 10"
+	 14,   "1 in 15"
+	 19,   "1 in 20"
+	 24,   "1 in 25"
+	 49,   "1 in 50"
+	 99,   "1 in 100"
+	 149,  "1 in 150"
+	 199,  "1 in 200"
+}
+
+// Drop Bias (for items that do not replace)
+OptionValue "DropBias" {
+	-1,    "Disabled"
+	 0,    "With All"
+	 2,    "1 in 3"
+	 4,    "1 in 5"
+	 9,    "1 in 10"
+	 14,   "1 in 15"
+	 19,   "1 in 20"
+	 24,   "1 in 25"
+	 49,   "1 in 50"
+	 99,   "1 in 100"
+	 149,  "1 in 150"
+	 199,  "1 in 200"
+}
+
+OptionMenu "CrossPulseMenu" {
+
+    Title "$CROSSPULSE_MENU"
+
+	StaticText "$MENU_ENERGYWEAPONS_TITLE", "Yellow"
+	StaticText ""
+    Submenu "$TAG_XTB", "xtbSpawning", 0, 1
+	StaticText ""
+
+	StaticText "$MENU_ITEMS_TITLE", "Red"
+    StaticText ""
+    Submenu "$TAG_XTK", "xtkSpawning", 0, 1
+    StaticText ""
+    StaticText ""
+
+	StaticText "$MENU_RESETOPTIONS_TITLE", "Red"
+	StaticText ""
+	SafeCommand "$CROSSPULSE_RESETALLOPTIONS", "CrossPulse_Reset_Cvars"
+}
+
+
+// Energy weapons
+
+OptionMenu "xtbSpawning" {
+    Title "$MENU_XTB_TITLE"
+
+   	StaticText "$MENU_NOTICE", "Cyan"
+    StaticText "$MENU_SPAWNRATE_TEXT1", "White"
+    StaticText "$MENU_SPAWNRATE_TEXT2", "White"
+    StaticText ""
+
+	StaticText "$MENU_SPAWNOPTIONS", "Cyan"
+    StaticText "$MENU_XTB_TB_SPAWNTEXT", "White"
+	Option "$MENU_WEPSPAWNRATE", "xtb_tb_spawn_bias", "SpawnBias"
+	SafeCommand "$MENU_RESETWEP", "resetcvar xtb_tb_spawn_bias"
+ 	StaticText ""
+
+	StaticText "$MENU_XTB_BACKPACKS", "White"
+	Option "$MENU_BACKPACKSALLOWED", "xtb_allowBackpacks", "OnOff"
+ 	StaticText ""
+
+	StaticText "$MENU_PERSISTENCYOPTIONS", "Cyan"
+    StaticText "$MENU_PERSISTENCY_TEXT", "White"
+	Option "$MENU_PERSISTENCY", "xtb_persistent_spawning", "OnOff"
+	SafeCommand "$MENU_RESETPERSISTENCY", "resetcvar xtb_persistent_spawning"
+ 	StaticText ""
+   	StaticText ""
+
+	StaticText "$MENU_RESETOPTIONS", "Cyan"
+	SafeCommand "$MENU_RESETALLOPTIONS", "xtb_reset_cvars"
+}
+
+
+// Items
+
+OptionMenu "xtkSpawning" {
+    Title "$MENU_XTK_TITLE"
+
+   	StaticText "$MENU_NOTICE", "Sapphire"
+    StaticText "$MENU_SPAWNRATE_TEXT1", "White"
+    StaticText "$MENU_SPAWNRATE_TEXT2", "White"
+    StaticText ""
+
+	StaticText "$MENU_SPAWNOPTIONS", "Sapphire"
+    StaticText "$MENU_XTK_TB_SPAWNTEXT", "White"
+	Option "$MENU_SPAWNRATE", "xtk_tb_spawn_bias", "DropBias"
+	SafeCommand "$MENU_RESETOPTIONS", "resetcvar xtk_tb_spawn_bias"
+ 	StaticText ""
+
+	StaticText "$MENU_PERSISTENCYOPTIONS", "Sapphire"
+    StaticText "$MENU_PERSISTENCY_TEXT", "White"
+	Option "$MENU_PERSISTENCY", "xtk_persistent_spawning", "OnOff"
+	SafeCommand "$MENU_RESETPERSISTENCY", "resetcvar xtk_persistent_spawning"
+ 	StaticText ""
+   	StaticText ""
+
+	StaticText "$MENU_RESETOPTIONS", "Sapphire"
+	SafeCommand "$MENU_RESETALLOPTIONS", "xtk_reset_cvars"
+}
+
+AddOptionMenu "OptionsMenu" {
+	Submenu "$CROSSPULSE_MENU", "CrossPulseMenu"
+}
+
+AddOptionMenu "HDAddonMenu" {
+	Submenu "$CROSSPULSE_MENU", "CrossPulseMenu"
+}

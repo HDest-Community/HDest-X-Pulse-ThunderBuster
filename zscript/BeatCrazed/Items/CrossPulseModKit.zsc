@@ -1,0 +1,45 @@
+// ------------------------------------------------------------
+// Cross Pulse Modification Kit
+// For people who want the X-Pulse TB but don't want to start with it in their inventory
+// ------------------------------------------------------------
+
+class CrossPulseModificationKit : HDPickup {
+    
+    action void A_Activate() {
+        let sacrificeTB = ThunderBuster(self.FindInventory("ThunderBuster"));
+        if (sacrificeTB) {
+            bool garbage;
+            Actor newTB;
+
+            [garbage, newTB] = self.A_SpawnItemEX("CrossPulseThunderBuster");
+
+            let buster = CrossPulseThunderBuster(newTB);
+            buster.weaponstatus[TBS_FLAGS] = sacrificeTB.weaponstatus[TBS_FLAGS];
+            buster.weaponstatus[TBS_BATTERY] = sacrificeTB.weaponstatus[TBS_BATTERY];
+            
+            sacrificeTB.destroy();
+            self.TakeInventory("CrossPulseModificationKit", 1);
+        } else {
+            A_Log(StringTable.Localize("$XTK_NO_TB"));
+        }
+    }
+    
+    default {
+        +hdpickup.norandombackpackspawn;
+        +Inventory.InvBar;
+
+        Tag "$TAG_XTK";
+        Inventory.PickupMessage "$PICKUP_XTK";
+        HDPickup.RefID "XTK";
+        HDPickup.Bulk 40;
+        Scale 0.5;
+    }
+    
+    states {
+        Spawn:
+            FKIT A 1;
+            loop;
+        Use:
+            TNT1 A 0 A_Activate();
+    }
+}

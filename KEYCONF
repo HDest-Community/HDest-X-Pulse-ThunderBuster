@@ -1,0 +1,4 @@
+alias xtb_reset_cvars "resetcvar xtb_tb_spawn_bias; resetcvar xtb_allowBackpacks; resetcvar xtb_persistent_spawning;"
+alias xtk_reset_cvars "resetcvar xtk_tb_spawn_bias; resetcvar xtk_allowBackpacks; resetcvar xtk_persistent_spawning;"
+
+alias CrossPulse_Reset_Cvars "xtb_reset_cvars; xtk_reset_cvars;"

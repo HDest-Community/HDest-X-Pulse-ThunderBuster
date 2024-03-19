@@ -1,0 +1,54 @@
+[enu default]
+
+// Options Menu Titles
+CROSSPULSE_MENU            = "\c[Sapphire]Ⓧ\c- Cross Pulse Thunderbuster";
+MENU_ENERGYWEAPONS_TITLE   = "--- Energy Weapons ---";
+MENU_ITEMS_TITLE           = "--- Items ---";
+MENU_RESETOPTIONS_TITLE    = "--- Reset Options ---";
+
+// Menu Section Headers
+MENU_SPAWNOPTIONS          = "Spawn Options";
+MENU_WEPSPAWNOPTIONS       = "Weapon Spawn Options";
+MENU_PERSISTENCYOPTIONS    = "Spawn Persistence Options";
+MENU_RESETOPTIONS          = "Reset Options";
+MENU_RESETALLOPTIONS       = "Reset all Options";
+
+// Menu Static Text
+MENU_SPAWNRATE_TEXT1       = "Setting 'spawn rate' to Replace All will suppress";
+MENU_SPAWNRATE_TEXT2       = "spawns of that given type.";
+MENU_PERSISTENCY_TEXT      = "Control whether replacements happen after a mapload:";
+
+// Menu Option Labels
+MENU_NOTICE                = "Notice:";
+MENU_BACKPACKSALLOWED      = "Allowed in Ammo Boxes and/or Backpacks: ";
+MENU_SPAWNRATE             = "Spawn Rate: ";
+MENU_WEPSPAWNRATE          = "Weapon Spawn Rate: ";
+MENU_PERSISTENCY           = "Persistent Spawns: ";
+MENU_WEPPERSISTENCY        = "Persistent Weapon Spawns: ";
+
+// Menu Command Text
+MENU_RESETWEP              = "Reset Weapon Options";
+MENU_RESETMAG              = "Reset Magazine Options";
+MENU_RESETPERSISTENCY      = "Reset Persistence Options";
+CROSSPULSE_RESETALLOPTIONS = "Reset all options for Cross Pulse Thunderbuster";
+
+// Cross Pulse ThunderBuster Options Text
+MENU_XTB_TITLE             = "------ Cross Pulse ThunderBuster Options ------";
+MENU_XTB_PLASMA_SPAWNTEXT  = "Control the spawn rate of the Cross Pulse ThunderBuster on ThunderBusters:";
+MENU_XTB_BACKPACKS         = "Control whether the Cross Pulse ThunderBusters spawn in Backpacks:";
+
+// Cross Pulse Modification Kit Options Text
+MENU_XTK_TITLE             = "------ Cross Pulse Modification Kit Options ------";
+MENU_XTK_PLASMA_SPAWNTEXT  = "Control the spawn rate of the Cross Pulse Modification Kits with ThunderBusters:";
+MENU_XTK_BACKPACKS         = "Control whether the Cross Pulse Modification Kits spawn in Backpacks:";
+
+
+TAG_XTB                    = "Cross Pulse ThunderBuster";
+TAG_XTK                    = "Cross Pulse ThunderBuster modification kit";
+
+PICKUP_XTB                 = "You got the particle beam gun! There's something attached to the front...";
+PICKUP_XTK                 = "You got a Cross Pulse ThunderBuster modification kit!";
+
+OB_XTB                     = "%o was roasted by %k's particle splatter.";
+
+XTK_NO_TB                  = "You need an ordinary ThunderBuster to use this on";

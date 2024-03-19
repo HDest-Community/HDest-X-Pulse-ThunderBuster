@@ -1,5 +1,0 @@
-GameInfo
-{
-	AddEventHandlers = "CrossPulseHandler"
-	AddEventHandlers = "ModKitSpawner"
-}
