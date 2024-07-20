@@ -216,6 +216,8 @@ class CrossPulseThunderBuster : ThunderBuster {
 
         //update range thingy
         invoker.weaponstatus[TBS_MAXRANGEDISPLAY] = (battery > 0 ? battery * 200 + 8000 : 0) / HDCONST_ONEMETRE;
+
+        A_WeaponReady(WRF_NOFIRE);
     }
 
     default {
@@ -249,8 +251,8 @@ class CrossPulseThunderBuster : ThunderBuster {
                     A_Refire();
                 }
             }
-            #### A 1 offset(0,34) A_WeaponReady(WRF_NONE);
-            #### A 1 offset(-1,33) A_WeaponReady(WRF_NONE);
+            #### A 1 offset(0,34) A_WeaponReady(WRF_NOFIRE);
+            #### A 1 offset(-1,33) A_WeaponReady(WRF_NOFIRE);
             #### A 0 {
                 if ((invoker.weaponstatus[TBS_BATTERY] + invoker.weaponstatus[TBS_CROSSPULSECHARGE]) < 1) {
                     A_StartSound("weapons/plasmas", CHAN_WEAPON);
