@@ -4,28 +4,33 @@
 // ------------------------------------------------------------
 
 class CrossPulseModificationKit : HDPickup {
-    actor newtb;
-	bool garbage;
-	crosspulsethunderbuster buster;
     action void A_Activate() {		
-		let sacrificeTB = ThunderBuster(player.readyweapon); //checks current weapon in hands instead of scrounging inventory
-		if (!sacrificeTB) {
-			A_Log(StringTable.Localize("$XTK_NO_TB"));
-		}
-		else {
-			[invoker.garbage,invoker.newtb] = self.A_SpawnItemEx("CrossPulseThunderBuster", //spits it out instead of dropping at feet
-						cos(pitch)*12,0,height-8-sin(pitch)*12,
-						cos(pitch)*(random(10,20)*0.1),0.2*randompick(-1,1),-sin(pitch),
-						0,SXF_NOCHECKPOSITION|SXF_TRANSFERPITCH
-					);
-			invoker.buster = crosspulsethunderbuster(invoker.newtb);
-			invoker.buster.weaponstatus[TBS_FLAGS] = sacrificeTB.weaponstatus[TBS_FLAGS];
-			invoker.buster.weaponstatus[TBS_BATTERY] = sacrificetb.weaponstatus[TBS_BATTERY];
-			sacrificetb.destroy();
-			self.takeinventory("crosspulsemodificationkit",1);
-		}
+        //checks current weapon in hands instead of scrounging inventory
+        let sacrificeTB = ThunderBuster(player.readyweapon);
+
+        if (sacrificeTB) {
+            bool garbage;
+            Actor newTB;
+
+            // spits it out instead of dropping at feet
+            [garbage, newTB] = self.A_SpawnItemEx(
+                'CrossPulseThunderBuster',
+                cos(pitch) * 12,0, height - 8 - sin(pitch) * 12, cos(pitch) * (random(10, 20) * 0.1),
+                0.2 * randompick(-1, 1), -sin(pitch), 0,
+                SXF_NOCHECKPOSITION|SXF_TRANSFERPITCH
+            );
+
+            let buster = CrossPulseThunderBuster(newTB);
+            buster.weaponstatus[TBS_FLAGS] = sacrificeTB.weaponstatus[TBS_FLAGS];
+            buster.weaponstatus[TBS_BATTERY] = sacrificeTB.weaponstatus[TBS_BATTERY];
+            
+            sacrificeTB.destroy();
+            self.takeinventory('CrossPulseModificationKit',1);
+        } else {
+            A_Log(StringTable.Localize("$XTK_NO_TB"));
+        }
     }
-    
+
     default {
         +hdpickup.norandombackpackspawn;
         +Inventory.InvBar;
