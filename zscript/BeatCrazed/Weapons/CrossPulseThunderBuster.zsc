@@ -7,7 +7,7 @@ class CrossPulseThunderBuster : ThunderBuster {
     override void tick() {
         super.tick();
 
-        if (level.time % 35 == 1 && weaponstatus[TBS_JUSTSHOT] > 0) {
+        if (Level.time % TICRATE == 1 && weaponstatus[TBS_JUSTSHOT] > 0) {
             weaponstatus[TBS_JUSTSHOT]--;
         }
 
