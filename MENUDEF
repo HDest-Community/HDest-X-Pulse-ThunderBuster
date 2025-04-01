@@ -2,7 +2,7 @@ OptionMenu "CrossPulseMenu" {
 
     Title "$CROSSPULSE_MENU"
 
-	StaticText "$MENU_ENERGYWEAPONS_TITLE", "Yellow"
+	StaticText "$MENU_ENERGYWEAPONS_TITLE", "Cyan"
 	StaticText ""
     Submenu "$TAG_XTB", "xtbSpawning", 0, 1
 	StaticText ""
