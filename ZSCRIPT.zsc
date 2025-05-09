@@ -5,5 +5,3 @@ const HDLD_XTK = "xtk";
 
 #include "zscript/BeatCrazed/Items/CrossPulseModKit.zsc"
 #include "zscript/BeatCrazed/Weapons/CrossPulseThunderBuster.zsc"
-
-#include "zscript/BeatCrazed/SpawnHandler.zsc"

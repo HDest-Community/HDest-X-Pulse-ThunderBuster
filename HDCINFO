@@ -1,0 +1,13 @@
+// Backpack Spawn Pool Filters
+addBPSpawnPoolFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
+addBPSpawnPoolFilter => { "name": "CrossPulseModificationKit", "allowed": "#xtk_allowBackpacks" }
+
+// Cross Pulse TB Spawns
+addSpawnTableSingleEntry => { "tableName": "HDCore.PlasmaRifleReplaces", "name": "CrossPulseThunderBuster", "weight": "#xtb_tb_spawn_bias", "persists": "#xtb_persistent_spawning" }
+
+// Cross Pulse Mod Kit Spawns
+newSpawnTable => { "spawnName": "ThunderBuster", "tableName": "XTB.ThunderBusterSpawns", "replaces": "false" }
+addSpawnTableSingleEntry => { "tableName": "XTB.ThunderBusterSpawns", "name": "CrossPulseModificationKit", "weight": "1", "chance": "#xtk_spawn_bias" "persists": "#xtk.persistent_spawning" }
+
+// Ammo Usages
+addAmmoUser => { "ammoName": "HDBattery", "name": "CrossPulseThunderBuster" }
