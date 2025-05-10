@@ -7,7 +7,7 @@ addSpawnTableSingleEntry => { "tableName": "HDCore.PlasmaRifleReplaces", "name":
 
 // Cross Pulse Mod Kit Spawns
 newSpawnTable => { "spawnName": "ThunderBuster", "tableName": "XTB.ThunderBusterSpawns", "replaces": "false" }
-addSpawnTableSingleEntry => { "tableName": "XTB.ThunderBusterSpawns", "name": "CrossPulseModificationKit", "weight": "1", "chance": "#xtk_spawn_bias" "persists": "#xtk.persistent_spawning" }
+addSpawnTableSingleEntry => { "tableName": "XTB.ThunderBusterSpawns", "name": "CrossPulseModificationKit", "chance": "#xtk_spawn_bias" "persists": "#xtk.persistent_spawning" }
 
 // Ammo Usages
 addAmmoUser => { "ammoName": "HDBattery", "name": "CrossPulseThunderBuster" }
