@@ -39,7 +39,7 @@ OptionMenu "xtbSpawning" {
 
 	StaticText "$MENU_SPAWNOPTIONS", "Cyan"
     StaticText "$MENU_XTB_TB_SPAWNTEXT", "White"
-	ScaleSlider "$MENU_WEPSPAWNRATE", "xtb_tb_spawn_bias", -1, 999, 1, "$MENU_REPLACEALL", "$MENU_DISABLED"
+	Slider "$MENU_WEPSPAWNRATE", "xtb_tb_spawn_bias",  0.0, 1000, .01, 3
 	SafeCommand "$MENU_RESETWEP", "resetcvar xtb_tb_spawn_bias"
  	StaticText ""
 
@@ -71,7 +71,7 @@ OptionMenu "xtkSpawning" {
 
 	StaticText "$MENU_SPAWNOPTIONS", "Sapphire"
     StaticText "$MENU_XTK_TB_SPAWNTEXT", "White"
-	ScaleSlider "$MENU_SPAWNRATE", "xtk_tb_spawn_bias", -1, 999, 1, "$MENU_WITHALL", "$MENU_DISABLED"
+	Slider "$MENU_SPAWNRATE", "xtk_tb_spawn_bias",  0.0, 1000, .01, 3
 	SafeCommand "$MENU_RESETOPTIONS", "resetcvar xtk_tb_spawn_bias"
  	StaticText ""
 
