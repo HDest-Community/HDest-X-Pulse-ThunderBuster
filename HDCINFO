@@ -11,3 +11,6 @@ addSpawnTableSingleEntry => { "tableName": "XTB.ThunderBusterSpawns", "name": "C
 
 // Ammo Usages
 addAmmoUser => { "ammoName": "HDBattery", "name": "CrossPulseThunderBuster" }
+
+// AceCorp Weapon Crate Filters
+addWeaponCrateFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
