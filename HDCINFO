@@ -14,3 +14,8 @@ addAmmoUser => { "ammoName": "HDBattery", "name": "CrossPulseThunderBuster" }
 
 // AceCorp Weapon Crate Filters
 addWeaponCrateFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
+
+// Merchant Store Entries
+newMerchantStoreItem => { "enabled": "#hdm_enable_xpulsetb", "type": "weapon", "category": "$MERCH_CAT_CROSSPULSETB", "item": "CrossPulseThunderBuster", "icon": "XTBRA0", "displayName": "$MERCH_TAG_CROSSPULSETB", "basePrice": "750", "flavorText": "$MERCH_FLAVOR_CROSSPULSETB" }
+
+newMerchantStoreItem => { "enabled": "#hdm_enable_xpulsekit", "type": "item", "category": "$MERCH_CAT_CROSSPULSEMODKIT", "item": "CrossPulseModificationKit", "icon": "FKITA0", "displayName": "$MERCH_TAG_CROSSPULSEMODKIT", "basePrice": "100", "flavorText": "$MERCH_FLAVOR_CROSSPULSEMODKIT" }

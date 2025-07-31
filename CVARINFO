@@ -8,3 +8,6 @@ server bool  xtb_persistent_spawning = false;
 server bool  xtk_allowBackpacks = true;
 server float xtk_tb_spawn_bias = 85.333;
 server bool  xtk_persistent_spawning = false;
+
+// Merchant Store Filters
+server bool hdm_enable_xpulsekit = true;
