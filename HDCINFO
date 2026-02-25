@@ -1,0 +1,21 @@
+// Backpack Spawn Pool Filters
+addBPSpawnPoolFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
+addBPSpawnPoolFilter => { "name": "CrossPulseModificationKit", "allowed": "#xtk_allowBackpacks" }
+
+// Cross Pulse TB Spawns
+addSpawnTableSingleEntry => { "tableName": "PlasmaRifleReplaces", "name": "CrossPulseThunderBuster", "weight": "#xtb_tb_spawn_bias", "persists": "#xtb_persistent_spawning" }
+
+// Cross Pulse Mod Kit Spawns
+newSpawnTable => { "spawnName": "ThunderBuster", "tableName": "XTB.ThunderBusterSpawns", "replaces": "false" }
+addSpawnTableSingleEntry => { "tableName": "XTB.ThunderBusterSpawns", "name": "CrossPulseModificationKit", "chance": "#xtk_tb_spawn_bias", "persists": "#xtk_persistent_spawning", "replaces": "false" }
+
+// Ammo Usages
+addAmmoUser => { "ammoName": "HDBattery", "name": "CrossPulseThunderBuster" }
+
+// AceCorp Weapon Crate Filters
+addWeaponCrateFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
+
+// Merchant Store Entries
+newMerchantStoreItem => { "enabled": "#hdm_enable_xpulsetb", "type": "weapon", "category": "$MERCH_CAT_CROSSPULSETB", "item": "CrossPulseThunderBuster", "icon": "XTBRA0", "displayName": "$MERCH_TAG_CROSSPULSETB", "basePrice": "750", "flavorText": "$MERCH_FLAVOR_CROSSPULSETB" }
+
+newMerchantStoreItem => { "enabled": "#hdm_enable_xpulsekit", "type": "item", "category": "$MERCH_CAT_CROSSPULSEMODKIT", "item": "CrossPulseModificationKit", "icon": "FKITA0", "displayName": "$MERCH_TAG_CROSSPULSEMODKIT", "basePrice": "100", "flavorText": "$MERCH_FLAVOR_CROSSPULSEMODKIT" }

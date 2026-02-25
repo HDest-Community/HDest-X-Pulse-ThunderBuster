@@ -58,3 +58,16 @@ PICKUP_XTK                 = "You got a Cross Pulse ThunderBuster modification k
 OB_XTB                     = "%o was roasted by %k's particle splatter.";
 
 XTK_NO_TB                  = "You need an ordinary ThunderBuster to use this on";
+
+
+// Merchant Store Entries
+
+// Cross-Pulse Thunder Buster Modification Kit
+MERCH_CAT_CROSSPULSETB            = "BeatCrazed";
+MERCH_TAG_CROSSPULSETB            = "Cross Pulse ThunderBuster";
+MERCH_FLAVOR_CROSSPULSETB         = "Za-BOOM!";
+
+// Cross-Pulse Thunder Buster Modification Kit
+MERCH_CAT_CROSSPULSEMODKIT        = "BeatCrazed";
+MERCH_TAG_CROSSPULSEMODKIT        = "Cross Pulse Modification kit";
+MERCH_FLAVOR_CROSSPULSEMODKIT     = "Take your plasmagun to the next level of hideous destruction.";
