@@ -1,6 +1,6 @@
 // Backpack Spawn Pool Filters
-addBPSpawnPoolFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
-addBPSpawnPoolFilter => { "name": "CrossPulseModificationKit", "allowed": "#xtk_allowBackpacks" }
+addStorageItemListFilter => { "name": "CrossPulseThunderBuster", "allowed": "#xtb_allowBackpacks" }
+addStorageItemListFilter => { "name": "CrossPulseModificationKit", "allowed": "#xtk_allowBackpacks" }
 
 // Cross Pulse TB Spawns
 addSpawnTableSingleEntry => { "tableName": "PlasmaRifleReplaces", "name": "CrossPulseThunderBuster", "weight": "#xtb_tb_spawn_bias", "persists": "#xtb_persistent_spawning" }
